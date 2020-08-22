@@ -6,6 +6,8 @@
   "author": "Jordan Welch",
   "license": "MIT",
   "devDependencies": {
+    "@highlandsolutions/eslint-config-highland": "^1.0.1",
+    "eslint": "^7.7.0",
     "grunt": "latest",
     "grunt-eslint": "latest",
     "grunt-jsonlint": "latest",
