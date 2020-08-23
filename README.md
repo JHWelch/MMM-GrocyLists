@@ -2,7 +2,7 @@
 
 This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/).
 
-Todo: Insert description here!
+Integrate with a [Grocy](https://grocy.info/) server to display information from various widgets.
 
 ## Using the module
 
@@ -24,5 +24,15 @@ var config = {
 
 | Option           | Description
 |----------------- |-----------
-| `option1`        | *Required* DESCRIPTION HERE
-| `option2`        | *Optional* DESCRIPTION HERE TOO <br><br>**Type:** `int`(milliseconds) <br>Default 60000 milliseconds (1 minute)
+| `grocyURL`       | *Required* URL of your Grocy instance. **Do not** include trailing `/`.<br><br>**Type:** `string`
+| `grocyAPIKey`    | *Required* API Key for your Grocy instance. Can be obtained off your instance at `[Instance URL]/manageapikeys`.<br><br>**Type:** `string`
+| `widgetType`     | *Optional* The type of Widget to render. <br><br>**Type:** `string` <br>Default `chores`
+| `proxyCORS`      | *Optional* Whether to use [cors-anywhere.herokuapp.com] to proxy for CORS purposes. Use if having trouble with API calls.  <br><br>**Type:** `boolean` <br>Default `false`
+| `updateInterval` | *Optional* How often to update the Module. <br><br>**Type:** `int`(milliseconds)<br>Default 300000 milliseconds (5 Minutes).
+| `retryDelay`     | *Optional* How long to wait to retry if error on API call.<br><br>**Type:** `int`(milliseconds) <br>Default 5000 milliseconds (5 minute).
+
+## Widget Types
+Currently only one widget type is in development.
+
+### Chores
+Show a list of upcoming chores due, or those overdue.

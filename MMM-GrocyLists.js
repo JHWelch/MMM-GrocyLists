@@ -9,7 +9,11 @@
 
 Module.register('MMM-GrocyLists', {
   defaults: {
-    updateInterval: 60000,
+    grocyURL:       '', // The API of your Grocy instance.
+    grocyAPIKey:    '', // The API Key of your Grocy Instance
+    widgetType:     'chores',
+    proxyCORS:      false,
+    updateInterval: 300000, // 10 Minutes
     retryDelay:     5000,
   },
 
@@ -30,6 +34,12 @@ Module.register('MMM-GrocyLists', {
     }, this.config.updateInterval);
   },
 
+  APIEndpoint(endpoint) {
+    if (this.config.proxyCORS) {
+      return `https://cors-anywhere.herokuapp.com/${this.config.grocyURL}/api/${endpoint}`;
+    }
+    return `${this.config.grocyURL}/api/${endpoint}`;
+  },
   /*
      * getData
      * function example return data and show it in the module wrapper
@@ -39,15 +49,13 @@ Module.register('MMM-GrocyLists', {
   getData() {
     const self = this;
 
-    const urlApi = 'https://jsonplaceholder.typicode.com/posts/1';
     let retry = true;
 
     const dataRequest = new XMLHttpRequest();
-    dataRequest.open('GET', urlApi, true);
+    dataRequest.open('GET', self.APIEndpoint('chores'), true);
+    dataRequest.setRequestHeader('GROCY-API-KEY', this.config.grocyAPIKey);
     dataRequest.onreadystatechange = function () {
-      console.log(this.readyState);
       if (this.readyState === 4) {
-        console.log(this.status);
         if (this.status === 200) {
           self.processData(JSON.parse(this.response));
         } else if (this.status === 401) {
@@ -92,8 +100,8 @@ Module.register('MMM-GrocyLists', {
     // If this.dataRequest is not empty
     if (this.dataRequest) {
       const wrapperDataRequest = document.createElement('div');
-      // check format https://jsonplaceholder.typicode.com/posts/1
-      wrapperDataRequest.innerHTML = this.dataRequest.title;
+
+      wrapperDataRequest.innerHTML = `<p> ${JSON.stringify(this.dataRequest)} </p>`;
 
       const labelDataRequest = document.createElement('label');
       // Use translate function
