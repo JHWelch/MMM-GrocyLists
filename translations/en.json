@@ -1,4 +1,9 @@
 {
   "TITLE": "Title",
-  "UPDATE": "Update"
+  "UPDATE": "Update",
+  "EMPTY": "Empty",
+  "LOADING": "Loading",
+  "TODAY": "Today",
+  "TOMORROW": "Tomorrow",
+  "DAYAFTERTOMORROW": "Day after tomorrow"
 }

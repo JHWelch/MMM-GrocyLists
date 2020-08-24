@@ -8,3 +8,25 @@
  * Custom here your css module
  *
  */
+.list .symbol {
+  padding-left: 0;
+  padding-right: 10px;
+  font-size: 80%;
+  vertical-align: top;
+}
+
+.list .symbol span {
+  display: inline-block;
+  transform: translate(0, 2px);
+}
+
+.list .title {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.list .time {
+  padding-left: 30px;
+  text-align: right;
+  vertical-align: top;
+}

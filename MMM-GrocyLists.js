@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* global Module */
 
 /* Magic Mirror
@@ -15,6 +16,7 @@ Module.register('MMM-GrocyLists', {
     proxyCORS:      false,
     updateInterval: 300000, // 10 Minutes
     retryDelay:     5000,
+    tableClass:     'chores',
   },
 
   requiresVersion: '2.1.0', // Required version of MagicMirror
@@ -33,7 +35,10 @@ Module.register('MMM-GrocyLists', {
       self.updateDom();
     }, this.config.updateInterval);
   },
-
+  /*
+  * Format the URL for a given API Endpoint. Will pass trhough CORS proxy
+  * if specified in settings.
+  */
   APIEndpoint(endpoint) {
     if (this.config.proxyCORS) {
       return `https://cors-anywhere.herokuapp.com/${this.config.grocyURL}/api/${endpoint}`;
@@ -73,7 +78,6 @@ Module.register('MMM-GrocyLists', {
     dataRequest.send();
   },
 
-
   /* scheduleUpdate()
      * Schedule next update.
      *
@@ -92,34 +96,87 @@ Module.register('MMM-GrocyLists', {
     }, nextLoad);
   },
 
+  createChoreList() {
+    const chores = [];
+    if (this.dataRequest) {
+      // const today = moment().startOf('day');
+      // const now = new Date();
+
+      for (const c in this.dataRequest) {
+        if (Object.prototype.hasOwnProperty.call(this.dataRequest, c)) {
+          const chore = {};
+
+          chore.title = this.dataRequest[c].chore_name;
+          chore.startDate = Date.parse(this.dataRequest[c].next_estimated_execution_time);
+          console.log(chore.startDate);
+          chores.push(chore);
+        }
+      }
+    }
+    return chores;
+  },
+
+  /* capFirst(string)
+	 * Capitalize the first letter of a string
+	 * Return capitalized string
+	 */
+  capFirst(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  },
+
   getDom() {
     const self = this;
 
-    // create element wrapper for show into the module
-    const wrapper = document.createElement('div');
+    const wrapper = document.createElement('table');
     // If this.dataRequest is not empty
-    if (this.dataRequest) {
-      const wrapperDataRequest = document.createElement('div');
 
-      wrapperDataRequest.innerHTML = `<p> ${JSON.stringify(this.dataRequest)} </p>`;
+    const chores = this.createChoreList();
 
-      const labelDataRequest = document.createElement('label');
-      // Use translate function
-      //             this id defined in translations files
-      labelDataRequest.innerHTML = this.translate('TITLE');
+    wrapper.className = this.config.tableClass;
 
-
-      wrapper.appendChild(labelDataRequest);
-      wrapper.appendChild(wrapperDataRequest);
+    if (chores.length === 0) {
+      wrapper.innerHTML = this.loaded ? this.translate('EMPTY') : this.translate('LOADING');
+      wrapper.className = `${this.config.tableClass} dimmed`;
+      return wrapper;
     }
 
-    // Data from helper
-    if (this.dataNotification) {
-      const wrapperDataNotification = document.createElement('div');
-      // translations  + datanotification
-      wrapperDataNotification.innerHTML = `${this.translate('UPDATE')}: ${this.dataNotification.date}`;
+    for (const c in chores) {
+      if (Object.prototype.hasOwnProperty.call(chores, c)) {
+        const chore = chores[c];
+        const choreWrapper = document.createElement('tr');
 
-      wrapper.appendChild(wrapperDataNotification);
+        choreWrapper.className = 'normal';
+
+        const titleWrapper = document.createElement('td');
+        titleWrapper.innerHTML = chore.title;
+        titleWrapper.className = 'title bright';
+
+        const timeWrapper = document.createElement('td');
+        choreWrapper.appendChild(titleWrapper);
+
+        const now = new Date();
+        // Define second, minute, hour, and day variables
+        const oneSecond = 1000; // 1,000 milliseconds
+        const oneMinute = oneSecond * 60;
+        const oneHour = oneMinute * 60;
+        const oneDay = oneHour * 24;
+
+        if (chore.today) {
+          timeWrapper.innerHTML = this.capFirst(this.translate('TODAY'));
+        } else if (chore.startDate - now < oneDay && chore.startDate - now > 0) {
+          timeWrapper.innerHTML = this.capFirst(this.translate('TOMORROW'));
+        } else if (chore.startDate - now < 2 * oneDay && chore.startDate - now > 0) {
+          if (this.translate('DAYAFTERTOMORROW') !== 'DAYAFTERTOMORROW') {
+            timeWrapper.innerHTML = this.capFirst(this.translate('DAYAFTERTOMORROW'));
+          } else {
+            timeWrapper.innerHTML = this.capFirst(moment(chore.startDate, 'x').fromNow());
+          }
+        } else {
+          timeWrapper.innerHTML = this.capFirst(moment(chore.startDate, 'x').from(moment().format('YYYYMMDD')));
+        }
+        choreWrapper.appendChild(timeWrapper);
+        wrapper.appendChild(choreWrapper);
+      }
     }
     return wrapper;
   },

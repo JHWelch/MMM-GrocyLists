@@ -2,7 +2,7 @@
 
 This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/).
 
-Integrate with a [Grocy](https://grocy.info/) server to display information from various widgets.
+Integrate with a [Grocy](https://github.com/grocy/grocy) server to display information from various widgets.
 
 ## Using the module
 
