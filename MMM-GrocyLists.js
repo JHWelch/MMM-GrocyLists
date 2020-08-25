@@ -98,18 +98,23 @@ Module.register('MMM-GrocyLists', {
 
   createChoreList() {
     const chores = [];
+    const NULLDATE = '2999-12-31 23:59:59';
     if (this.dataRequest) {
       // const today = moment().startOf('day');
       // const now = new Date();
 
       for (const c in this.dataRequest) {
         if (Object.prototype.hasOwnProperty.call(this.dataRequest, c)) {
-          const chore = {};
+          const drChore = this.dataRequest[c];
 
-          chore.title = this.dataRequest[c].chore_name;
-          chore.startDate = Date.parse(this.dataRequest[c].next_estimated_execution_time);
-          console.log(chore.startDate);
-          chores.push(chore);
+          if (drChore.next_estimated_execution_time !== NULLDATE) {
+            const chore = {};
+
+            chore.title = drChore.chore_name;
+            chore.startDate = Date.parse(drChore.next_estimated_execution_time);
+
+            chores.push(chore);
+          }
         }
       }
     }
