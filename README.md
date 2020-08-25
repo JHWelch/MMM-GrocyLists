@@ -31,9 +31,13 @@ var config = {
 | `proxyCORS`      | *Optional* Whether to use [cors-anywhere.herokuapp.com] to proxy for CORS purposes. Use if having trouble with API calls.  <br><br>**Type:** `boolean` <br>Default `false`
 | `updateInterval` | *Optional* How often to update the Module. <br><br>**Type:** `int`(milliseconds)<br>Default 300000 milliseconds (5 Minutes).
 | `retryDelay`     | *Optional* How long to wait to retry if error on API call.<br><br>**Type:** `int`(milliseconds) <br>Default 5000 milliseconds (5 minute).
+| `tableClass`     | *Optional* Class applied to the table. Controls sizing <br><br> `string`<br> Default `small`
 
 ## Widget Types
-Currently only one widget type is in development.
+Currently only one widget type.
 
 ### Chores
 Show a list of upcoming chores due, or those overdue.
+
+### Thanks
+* Built with [MagicMirror Module Template](https://github.com/roramirez/MagicMirror-Module-Template)
