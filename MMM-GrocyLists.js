@@ -16,7 +16,7 @@ Module.register('MMM-GrocyLists', {
     proxyCORS:      false,
     updateInterval: 300000, // 10 Minutes
     retryDelay:     5000,
-    tableClass:     'chores',
+    tableClass:     'small',
   },
 
   requiresVersion: '2.1.0', // Required version of MagicMirror

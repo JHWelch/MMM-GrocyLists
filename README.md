@@ -12,6 +12,7 @@ var config = {
     modules: [
         {
             module: 'MMM-GrocyLists',
+            header: "Grocy", // Customize depending on Widget.
             config: {
                 // See below for configurable options
             }
