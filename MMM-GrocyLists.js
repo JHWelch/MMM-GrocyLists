@@ -118,6 +118,21 @@ Module.register('MMM-GrocyLists', {
         }
       }
     }
+
+    chores.sort((a, b) => {
+      // Use toUpperCase() to ignore character casing
+      const startDateA = a.startDate;
+      const startDateB = b.startDate;
+
+      let comparison = 0;
+      if (startDateA > startDateB) {
+        comparison = 1;
+      } else if (startDateA < startDateB) {
+        comparison = -1;
+      }
+      return comparison;
+    });
+
     return chores;
   },
 
