@@ -17,6 +17,7 @@ Module.register('MMM-GrocyLists', {
     updateInterval: 300000, // 10 Minutes
     retryDelay:     5000,
     tableClass:     'small',
+	choreFilter: 0,
   },
 
   requiresVersion: '2.1.0', // Required version of MagicMirror
@@ -99,15 +100,30 @@ Module.register('MMM-GrocyLists', {
   createChoreList() {
     const chores = [];
     const NULLDATE = '2999-12-31 23:59:59';
+	// Define second, minute, hour, and day variables
+        const oneSecond = 1000; // 1,000 milliseconds
+        const oneMinute = oneSecond * 60;
+        const oneHour = oneMinute * 60;
+        const oneDay = oneHour * 24;
+	
     if (this.dataRequest) {
       // const today = moment().startOf('day');
-      // const now = new Date();
+	  const now = new Date();
+	
 
       for (const c in this.dataRequest) {
         if (Object.prototype.hasOwnProperty.call(this.dataRequest, c)) {
           const drChore = this.dataRequest[c];
 
-          if (drChore.next_estimated_execution_time !== NULLDATE) {
+          if (this.config.choreFilter > 0 && drChore.next_estimated_execution_time !== NULLDATE && Date.parse(drChore.next_estimated_execution_time) - now < this.config.choreFilter * oneDay && Date.parse(drChore.next_estimated_execution_time) - now > 0) {
+            const chore = {};
+
+            chore.title = drChore.chore_name;
+            chore.startDate = Date.parse(drChore.next_estimated_execution_time);
+
+            chores.push(chore);
+          }
+		  else if(drChore.next_estimated_execution_time !== NULLDATE && this.config.choreFilter === 0){
             const chore = {};
 
             chore.title = drChore.chore_name;
