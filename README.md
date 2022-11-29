@@ -32,6 +32,7 @@ var config = {
 | `updateInterval` | *Optional* How often to update the Module. <br><br>**Type:** `int`(milliseconds)<br>Default 300000 milliseconds (5 Minutes).
 | `retryDelay`     | *Optional* How long to wait to retry if error on API call.<br><br>**Type:** `int`(milliseconds) <br>Default 5000 milliseconds (5 minute).
 | `tableClass`     | *Optional* Class applied to the table. Controls sizing <br><br> `string`<br> Default `small`
+| `choreFilter`     | *Optional* Filters the number of days in the future to show chores. Zero for no filter. <br><br> `string`<br> Default `0`
 
 ## Widget Types
 Currently only one widget type.
