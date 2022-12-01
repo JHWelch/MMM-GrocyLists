@@ -235,7 +235,7 @@ if (this.config.showOverdue == true){
 		if (chore.startDate - now < 0 && chore.startDate < today && this.config.showOverdue == true) {
           timeWrapper.innerHTML = "<span style=\"color:red\">" + this.capFirst(this.translate('OVERDUE'));
         }
-		else if (chore.startDate - now < 1 * oneDay && chore.startDate - now > 0 && chore.startDate < today + oneDay) {
+		else if (chore.startDate - now < 1 * oneDay  && chore.startDate < today + oneDay) {
           timeWrapper.innerHTML = this.capFirst(this.translate('TODAY'));
 		} else if (chore.startDate - now < 2 * oneDay && chore.startDate - now > 0 && chore.startDate < today + (2 * oneDay)) {
           timeWrapper.innerHTML = this.capFirst(this.translate('TOMORROW'));
