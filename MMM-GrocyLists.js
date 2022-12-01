@@ -232,7 +232,7 @@ if (this.config.showOverdue == true){
         const oneDay = oneHour * 24;
 		const today = moment().startOf("day");
 
-		if (chore.startDate - now < 0 && this.config.showOverdue == true) {
+		if (chore.startDate - now < 0 && chore.startDate < today && this.config.showOverdue == true) {
           timeWrapper.innerHTML = "<span style=\"color:red\">" + this.capFirst(this.translate('OVERDUE'));
         }
 		else if (chore.startDate - now < 1 * oneDay && chore.startDate - now > 0 && chore.startDate < today + oneDay) {
