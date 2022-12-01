@@ -32,7 +32,9 @@ var config = {
 | `updateInterval` | *Optional* How often to update the Module. <br><br>**Type:** `int`(milliseconds)<br>Default 300000 milliseconds (5 Minutes).
 | `retryDelay`     | *Optional* How long to wait to retry if error on API call.<br><br>**Type:** `int`(milliseconds) <br>Default 5000 milliseconds (5 minute).
 | `tableClass`     | *Optional* Class applied to the table. Controls sizing <br><br> `string`<br> Default `small`
-| `choreFilter`     | *Optional* Filters the number of days in the future to show chores. Zero for no filter. <br><br> `int`<br> Default `0`
+| `choreFilter`    | *Optional* Filters the number of days in the future to show chores. Zero for no filter. <br><br> `int`<br> Default `0`
+| `timeOffset`     | *Optional* Offset the task due time by number of hours. May be used if your timezone is not being applied correctly. Zero for no offset. <br><br> `int`<br> Default `0`
+| `showOverdue`    | *Optional* True to show overdue chores. False to hide them. <br><br> `boolean`<br> Default `true`
 
 ## Widget Types
 Currently only one widget type.
