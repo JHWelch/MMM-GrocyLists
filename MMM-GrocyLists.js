@@ -246,7 +246,7 @@ if (this.config.showOverdue == true){
             timeWrapper.innerHTML = this.capFirst(moment(chore.startDate, 'x').fromNow());
           }
         } else {
-          timeWrapper.innerHTML = this.capFirst(moment(chore.startDate, 'x').from(moment(today + oneDay).format('YYYYMMDD')));
+			timeWrapper.innerHTML = this.capFirst(moment(chore.startDate, 'x').startOf('day').from(moment(today).format('YYYYMMDD')));
         }
         choreWrapper.appendChild(timeWrapper);
         wrapper.appendChild(choreWrapper);
