@@ -6,6 +6,21 @@ Integrate with a [Grocy](https://github.com/grocy/grocy) server to display infor
 
 This is a fork of MMM-GrocyLists by JHWelch for testing purposes.
 
+## Installation
+### Setup the MagicMirror module
+```bash
+cd ~/MagicMirror/modules
+git clone https://github.com/Bovive/MMM-Smartthings
+cd MMM-Smartthings
+npm install
+```
+
+## Updating
+Go to the module’s folder inside MagicMirror modules folder and pull the latest version from GitHub and install:
+```
+git pull
+```
+
 ## Using the module
 
 To use this module, add the following configuration block to the modules array in the `config/config.js` file:
