@@ -4,23 +4,6 @@ This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror
 
 Integrate with a [Grocy](https://github.com/grocy/grocy) server to display information from various widgets.
 
-This is a fork of MMM-GrocyLists by JHWelch for testing purposes.
-
-## Installation
-### Setup the MagicMirror module
-```bash
-cd ~/MagicMirror/modules
-git clone https://github.com/Bovive/MMM-GrocyLists
-cd MMM-GrocyLists
-npm install
-```
-
-## Updating
-Go to the module’s folder inside MagicMirror modules folder and pull the latest version from GitHub and install:
-```
-git pull
-```
-
 ## Using the module
 
 To use this module, add the following configuration block to the modules array in the `config/config.js` file:
@@ -50,8 +33,6 @@ var config = {
 | `retryDelay`     | *Optional* How long to wait to retry if error on API call.<br><br>**Type:** `int`(milliseconds) <br>Default 5000 milliseconds (5 minute).
 | `tableClass`     | *Optional* Class applied to the table. Controls sizing <br><br> `string`<br> Default `small`
 | `choreFilter`    | *Optional* Filters the number of days in the future to show chores. Zero for no filter. <br><br> `int`<br> Default `0`
-| `timeOffset`     | *Optional* Offset the task due time by number of hours. May be used if your timezone is not being applied correctly. Zero for no offset. <br><br> `int`<br> Default `0`
-| `showOverdue`    | *Optional* True to show overdue chores. False to hide them. <br><br> `boolean`<br> Default `true`
 
 ## Widget Types
 Currently only one widget type.

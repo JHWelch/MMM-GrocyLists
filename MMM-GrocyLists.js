@@ -18,8 +18,6 @@ Module.register('MMM-GrocyLists', {
     retryDelay:     5000,
     tableClass:     'small',
 	choreFilter: 0,
-	timeOffset: 0,
-	showOverdue: true,
   },
 
   requiresVersion: '2.1.0', // Required version of MagicMirror
@@ -110,36 +108,9 @@ Module.register('MMM-GrocyLists', {
 	
     if (this.dataRequest) {
       // const today = moment().startOf('day');
-	  const date = new Date();
-	  const now = date.setTime(date.getTime() + this.config.timeOffset * 60 * 60 * 1000);
+	  const now = new Date();
 	
-if (this.config.showOverdue == true){
-      for (const c in this.dataRequest) {
-        if (Object.prototype.hasOwnProperty.call(this.dataRequest, c)) {
-          const drChore = this.dataRequest[c];
 
-          if (this.config.choreFilter > 0 && drChore.next_estimated_execution_time !== NULLDATE && Date.parse(drChore.next_estimated_execution_time) - now < this.config.choreFilter * oneDay) {
-            const chore = {};
-
-            chore.title = drChore.chore_name;
-            chore.startDate = Date.parse(drChore.next_estimated_execution_time);
-
-            chores.push(chore);
-          }
-		  else if(drChore.next_estimated_execution_time !== NULLDATE && this.config.choreFilter === 0){
-            const chore = {};
-
-            chore.title = drChore.chore_name;
-            chore.startDate = Date.parse(drChore.next_estimated_execution_time);
-
-            chores.push(chore);
-          }
-        }
-      }
-	  
-	}
-	
-	else{
       for (const c in this.dataRequest) {
         if (Object.prototype.hasOwnProperty.call(this.dataRequest, c)) {
           const drChore = this.dataRequest[c];
@@ -162,9 +133,6 @@ if (this.config.showOverdue == true){
           }
         }
       }
-	  
-	}
-		
     }
 
     chores.sort((a, b) => {
@@ -222,41 +190,32 @@ if (this.config.showOverdue == true){
         const timeWrapper = document.createElement('td');
         choreWrapper.appendChild(titleWrapper);
 
-        const date = new Date();
-		const now = date.setTime(date.getTime() + this.config.timeOffset * 60 * 60 * 1000);
-		const nowtest = Date();
+        const now = new Date();
         // Define second, minute, hour, and day variables
         const oneSecond = 1000; // 1,000 milliseconds
         const oneMinute = oneSecond * 60;
         const oneHour = oneMinute * 60;
         const oneDay = oneHour * 24;
-		const today = moment().startOf("day");
 
-		if (chore.startDate - now < 0 && chore.startDate < today && this.config.showOverdue == true) {
-          timeWrapper.innerHTML = "<span style=\"color:red\">" + this.capFirst(this.translate('OVERDUE'));
-        }
-		else if (chore.startDate - now < 1 * oneDay  && chore.startDate < today + oneDay) {
+        if (chore.today) {
           timeWrapper.innerHTML = this.capFirst(this.translate('TODAY'));
-		} else if (chore.startDate - now < 2 * oneDay && chore.startDate - now > 0 && chore.startDate < today + (2 * oneDay)) {
+        } else if (chore.startDate - now < oneDay && chore.startDate - now > 0) {
           timeWrapper.innerHTML = this.capFirst(this.translate('TOMORROW'));
-        } else if (chore.startDate - now < 3 * oneDay && chore.startDate - now > 0 && chore.startDate < today + (3 * oneDay)) {
+        } else if (chore.startDate - now < 2 * oneDay && chore.startDate - now > 0) {
           if (this.translate('DAYAFTERTOMORROW') !== 'DAYAFTERTOMORROW') {
             timeWrapper.innerHTML = this.capFirst(this.translate('DAYAFTERTOMORROW'));
           } else {
             timeWrapper.innerHTML = this.capFirst(moment(chore.startDate, 'x').fromNow());
           }
         } else {
-			timeWrapper.innerHTML = this.capFirst(moment(chore.startDate, 'x').startOf('day').from(moment(today).format('YYYYMMDD')));
+          timeWrapper.innerHTML = this.capFirst(moment(chore.startDate, 'x').from(moment().format('YYYYMMDD')));
         }
         choreWrapper.appendChild(timeWrapper);
         wrapper.appendChild(choreWrapper);
       }
     }
     return wrapper;
-
-  
   },
-
 
   getScripts() {
     return [];
