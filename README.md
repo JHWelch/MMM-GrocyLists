@@ -4,8 +4,6 @@ This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror
 
 Integrate with a [Grocy](https://github.com/grocy/grocy) server to display information from various widgets.
 
-This is a fork of MMM-GrocyLists by JHWelch for testing purposes.
-
 ## Installation
 ### Setup the MagicMirror module
 ```bash
