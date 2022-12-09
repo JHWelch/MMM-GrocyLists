@@ -10,8 +10,8 @@ This is a fork of MMM-GrocyLists by JHWelch for testing purposes.
 ### Setup the MagicMirror module
 ```bash
 cd ~/MagicMirror/modules
-git clone https://github.com/Bovive/MMM-Smartthings
-cd MMM-Smartthings
+git clone https://github.com/Bovive/MMM-GrocyLists
+cd MMM-GrocyLists
 npm install
 ```
 
